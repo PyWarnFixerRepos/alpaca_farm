@@ -60,5 +60,4 @@ def make_kl_controller(args, accelerator=None):
             k_beta=args.k_beta,
             accelerator=accelerator,
         )
-    else:
-        return FixedKLController(kl_coef=args.kl_coef)
+    return FixedKLController(kl_coef=args.kl_coef)

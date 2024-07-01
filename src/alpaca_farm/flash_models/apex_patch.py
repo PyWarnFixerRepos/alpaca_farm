@@ -31,8 +31,7 @@ def apex_layernorm(ln_module, input_):
         return apex.normalization.fused_layer_norm.FusedLayerNormAffineFunction.apply(
             input_, ln_module.weight, ln_module.bias, ln_module.normalized_shape, ln_module.eps
         )
-    else:
-        return ln_module(input_)
+    return ln_module(input_)
 
 
 def apex_rmsnorm(ln_module, input_):
@@ -40,5 +39,4 @@ def apex_rmsnorm(ln_module, input_):
         return apex.normalization.fused_layer_norm.FusedRMSNormAffineFunction.apply(
             input_, ln_module.weight, ln_module.weight.size(), ln_module.variance_epsilon
         )
-    else:
-        return ln_module(input_)
+    return ln_module(input_)

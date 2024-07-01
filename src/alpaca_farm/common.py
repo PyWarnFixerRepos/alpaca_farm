@@ -251,10 +251,9 @@ def flatten_dict(nested, sep=".", postprocess_fn=lambda *args: args):
 def unpack_dict(d: Dict, keys: Sequence[str], return_type: type = tuple) -> Union[Sequence, Dict]:
     if return_type in (tuple, list):
         return return_type(d[key] for key in keys)
-    elif return_type == dict:
+    if return_type == dict:
         return {key: d[key] for key in keys}
-    else:
-        raise ValueError(f"Unknown return_type: {return_type}")
+    raise ValueError(f"Unknown return_type: {return_type}")
 
 
 def merge_dict(dicts: Sequence[dict], merge_fn: Callable = lambda *args: args) -> dict:
@@ -295,9 +294,9 @@ def get_transformer_hidden_size(model: transformers.PreTrainedModel):
 def prepare_inputs(data: Union[torch.Tensor, Any], device: Union[str, int, torch.device]) -> Union[torch.Tensor, Any]:
     if isinstance(data, Mapping):
         return type(data)({k: prepare_inputs(v, device) for k, v in data.items()})  # noqa
-    elif isinstance(data, (tuple, list)):
+    if isinstance(data, (tuple, list)):
         return type(data)(prepare_inputs(v, device) for v in data)
-    elif isinstance(data, torch.Tensor):
+    if isinstance(data, torch.Tensor):
         return data.to(device)  # This can break with deepspeed.
     return data
 

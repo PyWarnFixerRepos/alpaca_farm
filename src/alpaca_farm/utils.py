@@ -157,14 +157,13 @@ def stable_resize_token_embeddings(model: transformers.PreTrainedModel, target_s
 def convert_str_dtype_to_torch_dtype(str_dtype: Optional[str]):
     if str_dtype in ("single", "float32", "float", "fp32", None):
         return torch.float
-    elif str_dtype in ("half", "float16", "fp16"):
+    if str_dtype in ("half", "float16", "fp16"):
         return torch.float16
-    elif str_dtype in ("bfloat16", "bf16"):
+    if str_dtype in ("bfloat16", "bf16"):
         return torch.bfloat16
-    elif str_dtype in ("double", "float64"):
+    if str_dtype in ("double", "float64"):
         return torch.float64
-    else:
-        raise ValueError(f"Unknown dtype: {str_dtype}")
+    raise ValueError(f"Unknown dtype: {str_dtype}")
 
 
 def manual_seed(args_or_seed: Union[int, argparse.Namespace], fix_cudnn=False):

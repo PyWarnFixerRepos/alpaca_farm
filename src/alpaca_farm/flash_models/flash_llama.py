@@ -92,14 +92,14 @@ class LlamaAttention(modeling_llama.LlamaAttention):
                 )
                 past_key_value = (key_states, value_states)
             return attn_output, None, past_key_value
-        else:
-            return super(LlamaAttention, self).forward(  # noqa
-                hidden_states=hidden_states,
-                attention_mask=attention_mask_k,
-                position_ids=position_ids,
-                past_key_value=past_key_value,
-                use_cache=use_cache,
-            )
+
+        return super(LlamaAttention, self).forward(  # noqa
+            hidden_states=hidden_states,
+            attention_mask=attention_mask_k,
+            position_ids=position_ids,
+            past_key_value=past_key_value,
+            use_cache=use_cache,
+        )
 
 
 class LlamaDecoderLayer(modeling_llama.LlamaDecoderLayer):
